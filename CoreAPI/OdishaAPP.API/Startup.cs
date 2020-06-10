@@ -12,8 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
-using OdishaAPP.API.Data;
-using OdishaAPP.API.Models;
+using Infrastructure;
+using Infrastructure.Data;
+using Core.Interfaces;
 
 namespace OdishaAPP.API
 {
@@ -29,6 +30,7 @@ namespace OdishaAPP.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddControllers();
             services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("myStoreDB")));

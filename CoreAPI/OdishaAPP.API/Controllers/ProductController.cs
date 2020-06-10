@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using OdishaAPP.API.Data;
-using OdishaAPP.API.Entities;
+using Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Core;
+using Core.Interfaces;
 
 namespace OdishaAPP.API.Controllers
 {
@@ -12,17 +13,17 @@ namespace OdishaAPP.API.Controllers
     [Route("api/[controller]")]
     public class ProductController :ControllerBase
     {
-        private readonly DataContext _context;
-        public ProductController(DataContext context)
+        private readonly IProductRepository _repo;
+        public ProductController(IProductRepository repo )
         {
-            _context=context;
+            _repo = repo;
         }
 
         [HttpGet]
 
         public async Task<ActionResult<List<Product>>> GetProduct()
         {
-            var products=await _context.Products.ToListAsync();
+            var products = await _repo.GetProductAsync();
 
             return Ok(products);
 
@@ -30,7 +31,7 @@ namespace OdishaAPP.API.Controllers
         [HttpGet("{id}")]
          public async Task<ActionResult<Product>> GetProduct(int id)
         {
-           return await _context.Products.FindAsync(id);
+            return await _repo.GetProductByIdAsync(id);
             
         }
 
