@@ -2,7 +2,7 @@
 using Core;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure
+namespace OdishaAPP.API
 {
     public class DataContext: DbContext
     {

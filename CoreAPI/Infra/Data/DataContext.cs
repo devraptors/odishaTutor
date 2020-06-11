@@ -2,7 +2,7 @@
 using Core;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure
+namespace Infra
 {
     public class DataContext: DbContext
     {
