@@ -11,6 +11,8 @@ using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 using OdishaAPP.API.Controllers;
+using System.Reflection;
+using System.IO;
 
 namespace OdishaAPP.API
 {
@@ -23,7 +25,6 @@ namespace OdishaAPP.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
            
@@ -32,10 +33,22 @@ namespace OdishaAPP.API
             options.UseSqlServer(Configuration.GetConnectionString("myStoreNewDB")));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddCors();
+            services.AddSwaggerGen(setupAction =>
+            {
+                setupAction.SwaggerDoc("LibMyStore", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "MyStoreAPI",
+                    Version = "1"
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                setupAction.IncludeXmlComments(xmlPath);
+            });
            // services.AddScoped<IAuthRepository,AuthRepository>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -48,6 +61,17 @@ namespace OdishaAPP.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint(
+                    "/swagger/LibMyStore/swagger.json",
+                    "MyStoreApp"
+                    );
+                //setupAction.RoutePrefix = "";
+            });
 
             app.UseEndpoints(endpoints =>
             {
