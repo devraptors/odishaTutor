@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Core.Interfaces;
+using Infra;
 using Microsoft.EntityFrameworkCore;
 
 using OdishaAPP.API.Controllers;

@@ -1,6 +1,7 @@
 
-using Core;
+using Infra;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace OdishaAPP.API
 {
@@ -14,6 +15,11 @@ namespace OdishaAPP.API
 
         public DbSet<ProductType> ProductTypes { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
     //     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //{
     //    // TODO GitHubIssue#57: Complete EF7 to EDM model mapping

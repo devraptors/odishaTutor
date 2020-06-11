@@ -1,6 +1,6 @@
-using Core.Entities;
+using Infra;
 
-namespace Core
+namespace Infra
 {
     public class Product:BaseEntity
     {

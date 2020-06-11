@@ -1,5 +1,4 @@
-﻿using Core;
-using Core.Interfaces;
+﻿using Infra;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

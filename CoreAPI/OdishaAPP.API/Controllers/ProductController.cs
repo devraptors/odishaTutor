@@ -4,8 +4,7 @@ using Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Core;
-using Core.Interfaces;
+ using Infra;
 
 namespace OdishaAPP.API.Controllers
 {
