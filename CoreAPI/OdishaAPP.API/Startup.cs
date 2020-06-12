@@ -41,9 +41,9 @@ namespace OdishaAPP.API
                     Version = "1"
                 });
 
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                setupAction.IncludeXmlComments(xmlPath);
+                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                //setupAction.IncludeXmlComments(xmlPath);
             });
            // services.AddScoped<IAuthRepository,AuthRepository>();
         }

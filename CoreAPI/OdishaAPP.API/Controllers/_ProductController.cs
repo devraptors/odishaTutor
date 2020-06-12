@@ -10,10 +10,10 @@ namespace OdishaAPP.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductController :ControllerBase
+    public class _ProductController :ControllerBase
     {
         private readonly IProductRepository _repo;
-        public ProductController(IProductRepository repo )
+        public _ProductController(IProductRepository repo )
         {
             _repo = repo;
         }
