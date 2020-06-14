@@ -20,6 +20,7 @@ namespace OdishaAPP.API.Data.Config
             builder.Property(p => p.PictureUrl).IsRequired();
             builder.HasOne(b => b.ProductBand).WithMany().HasForeignKey(p => p.ProductBrandId);
             builder.HasOne(b => b.ProductType).WithMany().HasForeignKey(p => p.ProductTypeId);
+            builder.HasOne(b => b.ProductCategories).WithMany().HasForeignKey(p => p.ProductCategoriesId);
         }
     }
 }
