@@ -2,7 +2,7 @@
 
 namespace OdishaAPP.API.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class MyFirst : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,11 +12,26 @@ namespace OdishaAPP.API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    BrandFlag = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductBands", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Categoriesflag = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -25,7 +40,8 @@ namespace OdishaAPP.API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    ProductTypeFlag = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,23 +54,30 @@ namespace OdishaAPP.API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    PictureUrl = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Description = table.Column<string>(maxLength: 180, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PictureUrl = table.Column<string>(nullable: false),
                     ProductTypeId = table.Column<int>(nullable: false),
-                    ProductBandId = table.Column<int>(nullable: true),
-                    ProductBrandId = table.Column<int>(nullable: false)
+                    ProductBrandId = table.Column<int>(nullable: false),
+                    ProductCategoriesId = table.Column<int>(nullable: false),
+                    productFlag = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_ProductBands_ProductBandId",
-                        column: x => x.ProductBandId,
+                        name: "FK_Products_ProductBands_ProductBrandId",
+                        column: x => x.ProductBrandId,
                         principalTable: "ProductBands",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_ProductCategories_ProductCategoriesId",
+                        column: x => x.ProductCategoriesId,
+                        principalTable: "ProductCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Products_ProductTypes_ProductTypeId",
                         column: x => x.ProductTypeId,
@@ -64,9 +87,14 @@ namespace OdishaAPP.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_ProductBandId",
+                name: "IX_Products_ProductBrandId",
                 table: "Products",
-                column: "ProductBandId");
+                column: "ProductBrandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_ProductCategoriesId",
+                table: "Products",
+                column: "ProductCategoriesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductTypeId",
@@ -81,6 +109,9 @@ namespace OdishaAPP.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductBands");
+
+            migrationBuilder.DropTable(
+                name: "ProductCategories");
 
             migrationBuilder.DropTable(
                 name: "ProductTypes");

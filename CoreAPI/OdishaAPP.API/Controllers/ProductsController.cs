@@ -26,7 +26,9 @@ namespace OdishaAPP.API.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             return await _context.Products.Include(P =>P.ProductType)
-                                           .Include(P=>P.ProductBand).
+                                           .Include(P=>P.ProductBand)
+                                           .Include(P=>P.ProductCategories).
+                                           
                                              ToListAsync();
         }
 
@@ -35,7 +37,7 @@ namespace OdishaAPP.API.Controllers
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = await _context.Products.Include(P => P.ProductType)
-                                           .Include(P => P.ProductBand).FirstOrDefaultAsync(P => P.Id == id);
+                                           .Include(P => P.ProductBand).Include(P => P.ProductCategories).FirstOrDefaultAsync(P => P.Id == id);
 
             if (product == null)
             {

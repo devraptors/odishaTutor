@@ -30,7 +30,7 @@ namespace OdishaAPP.API
            
             services.AddControllers();
             services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("myStoreNewDB")));
+            options.UseSqlServer(Configuration.GetConnectionString("odiganicDB")));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddCors();
             services.AddSwaggerGen(setupAction =>

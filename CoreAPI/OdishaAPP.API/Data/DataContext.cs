@@ -1,5 +1,6 @@
 
 using Infra;
+using Infra.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -14,6 +15,9 @@ namespace OdishaAPP.API
         public DbSet<ProductBand> ProductBands { get; set; }
 
         public DbSet<ProductType> ProductTypes { get; set; }
+
+      public DbSet<ProductCategories> ProductCategories { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

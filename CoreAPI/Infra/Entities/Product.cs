@@ -1,4 +1,5 @@
 using Infra;
+using Infra.Entities;
 
 namespace Infra
 {
@@ -14,12 +15,16 @@ namespace Infra
         public string PictureUrl { get; set; }
 
         public ProductType  ProductType { get; set; }
-
+        public ProductCategories ProductCategories { get; set; }
         public int ProductTypeId { get; set; }
 
         public ProductBand ProductBand { get; set; }
 
         public int ProductBrandId { get; set; }
+
+        public int ProductCategoriesId { get; set; }
+
+        public bool productFlag { get; set; }
 
         
     }

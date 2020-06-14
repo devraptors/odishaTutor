@@ -18,7 +18,25 @@ namespace OdishaAPP.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Core.Product", b =>
+            modelBuilder.Entity("Infra.Entities.ProductCategories", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Categoriesflag")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductCategories");
+                });
+
+            modelBuilder.Entity("Infra.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,24 +63,35 @@ namespace OdishaAPP.API.Migrations
                     b.Property<int>("ProductBrandId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProductCategoriesId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("productFlag")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductBrandId");
+
+                    b.HasIndex("ProductCategoriesId");
 
                     b.HasIndex("ProductTypeId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Core.ProductBand", b =>
+            modelBuilder.Entity("Infra.ProductBand", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("BrandFlag")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -72,7 +101,7 @@ namespace OdishaAPP.API.Migrations
                     b.ToTable("ProductBands");
                 });
 
-            modelBuilder.Entity("Core.ProductType", b =>
+            modelBuilder.Entity("Infra.ProductType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,20 +111,29 @@ namespace OdishaAPP.API.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("ProductTypeFlag")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("ProductTypes");
                 });
 
-            modelBuilder.Entity("Core.Product", b =>
+            modelBuilder.Entity("Infra.Product", b =>
                 {
-                    b.HasOne("Core.ProductBand", "ProductBand")
+                    b.HasOne("Infra.ProductBand", "ProductBand")
                         .WithMany()
                         .HasForeignKey("ProductBrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.ProductType", "ProductType")
+                    b.HasOne("Infra.Entities.ProductCategories", "ProductCategories")
+                        .WithMany()
+                        .HasForeignKey("ProductCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Infra.ProductType", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
